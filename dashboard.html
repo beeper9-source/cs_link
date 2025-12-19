@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>상품별 사업성 대시보드 3.0</title>
+    <link rel="stylesheet" href="dashboard.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.39.0/dist/umd/supabase.min.js"></script>
+</head>
+<body>
+    <div class="dashboard-container">
+        <header class="dashboard-header">
+            <h1>상품별 사업성 대시보드 3.0</h1>
+            <div class="header-controls">
+                <select id="dateRange" class="date-selector">
+                    <option value="6">최근 6개월</option>
+                    <option value="12">최근 12개월</option>
+                    <option value="24">최근 24개월</option>
+                </select>
+                <button id="refreshBtn" class="refresh-btn">새로고침</button>
+            </div>
+        </header>
+
+        <div class="filter-section">
+            <div class="filter-group">
+                <label for="productFilter" class="filter-label">상품선택</label>
+                <select id="productFilter" class="product-selector" multiple>
+                    <option value="all" selected>전체</option>
+                    <option value="Brity Automation">Brity Automation</option>
+                    <option value="MES">MES</option>
+                    <option value="ERP">ERP</option>
+                    <option value="Knox">Knox</option>
+                </select>
+                <div class="filter-hint">Ctrl(또는 Cmd) 키를 누른 채로 여러 상품을 선택할 수 있습니다</div>
+            </div>
+        </div>
+
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-label">총 매출</div>
+                <div class="stat-value" id="totalRevenue">-</div>
+                <div class="stat-change" id="revenueChange">-</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-label">총 이익</div>
+                <div class="stat-value" id="totalProfit">-</div>
+                <div class="stat-change" id="profitChange">-</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-label">평균 이익률</div>
+                <div class="stat-value" id="avgMargin">-</div>
+                <div class="stat-change" id="marginChange">-</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-label">총 판매량</div>
+                <div class="stat-value" id="totalSales">-</div>
+                <div class="stat-change" id="salesChange">-</div>
+            </div>
+        </div>
+
+        <div class="charts-grid">
+            <div class="chart-card">
+                <h2>상품별 VOC건수</h2>
+                <canvas id="revenueChart"></canvas>
+            </div>
+            <div class="chart-card">
+                <h2>상품별 SR 적기 처리율</h2>
+                <canvas id="profitMarginChart"></canvas>
+            </div>
+            <div class="chart-card">
+                <h2>상품별 불만건수</h2>
+                <canvas id="growthRateChart"></canvas>
+            </div>
+            <div class="chart-card">
+                <h2>상품별 VOC 유형</h2>
+                <canvas id="marketShareChart"></canvas>
+            </div>
+        </div>
+
+        <div class="table-section">
+            <h2>상품별 상세 현황</h2>
+            <div class="table-container">
+                <table id="productTable">
+                    <thead>
+                        <tr>
+                            <th>상품명</th>
+                            <th>카테고리</th>
+                            <th>매출</th>
+                            <th>이익</th>
+                            <th>이익률</th>
+                            <th>판매량</th>
+                            <th>성장률</th>
+                            <th>시장점유율</th>
+                            <th>고객만족도</th>
+                        </tr>
+                    </thead>
+                    <tbody id="productTableBody">
+                        <tr>
+                            <td colspan="9" class="loading">데이터를 불러오는 중...</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <script src="dashboard.js"></script>
+</body>
+</html>
